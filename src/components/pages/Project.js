@@ -1,5 +1,7 @@
 import "../../assents/styles/output.css";
 
+import {parse, v4 as uuidv4} from 'uuid';
+
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -7,6 +9,7 @@ import Loader from "../layout/Loader";
 import Container from "../layout/Container";
 
 import ProjectForm from "../layout/Project/ProjectForm";
+import ServiceForm from "../layout/Service/ServiceForm";
 
 import Mensagem from "../layout/Mensagem";
 
@@ -29,6 +32,26 @@ const Project = () => {
         .catch((err) => console.error(err));
     }, 300);
   }, [id]);
+
+  const createService = () => {
+
+    setMessage('')
+
+    const lastService = project.services[project.services.length - 1];
+
+    lastService.id = uuidv4();
+
+    const lastServiceCost = lastService.cost;
+
+    const newCost = parseFloat(project.cors) + parseFloat(lastServiceCost);
+
+    if(newCost > parseFloat(project.project_orcament)){
+      setMessage("O orçamento não pode ser ajustado pois ultrapassa o limite do projeto.")
+      setType("error");
+      project.services.pop();
+      return false;
+    }
+  }
 
   const togleProjectForm = () => {
     setShowProjectForm(!showProjectForm);
@@ -123,7 +146,7 @@ const Project = () => {
               {!showServiceForm ? "Adicionar Serviço" : "Fechar"}
             </button>
             </div>
-            <div>{showServiceForm && <div>Formulário</div>}</div>
+            <div>{showServiceForm && (<ServiceForm handleSubmit={createService} btnText="Adicionar serviço" projectData={project}/>)}</div>
           </div>
           <h2 className="text-2xl font-bold mb-5">Serviços</h2>
             <Container customClass="noPadding">
