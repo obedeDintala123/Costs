@@ -1,0 +1,23 @@
+.container{
+    margin: 0;
+    padding: 2.5rem 2rem 2.5rem 2rem;
+    flex-wrap: wrap;
+}
+
+.min-height{
+    min-height: 75%;
+}
+
+.start{
+    justify-content: flex-start;
+}
+
+.column{
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.row{
+    display: flex;
+    gap: 10px;
+}

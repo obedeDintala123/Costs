@@ -1,0 +1,37 @@
+{
+  "projects": [
+    {
+      "id": "dd22",
+      "project_name": "Página Web",
+      "project_orcament": "95.000",
+      "category": {
+        "id": "1",
+        "name": "Infra-estrutura"
+      },
+      "cors": 0,
+      "services": []
+    }
+  ],
+  "categories": [
+    {
+      "id": "0",
+      "name": "Selecione uma das opções"
+    },
+    {
+      "id": "1",
+      "name": "Infra-estrutura"
+    },
+    {
+      "id": "2",
+      "name": "Desenvolvimento"
+    },
+    {
+      "id": "3",
+      "name": "Design"
+    },
+    {
+      "id": "4",
+      "name": "Planejamento"
+    }
+  ]
+}
