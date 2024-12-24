@@ -125,8 +125,8 @@ const Project = () => {
             </div>
             <div>{showServiceForm && <div>Formulário</div>}</div>
           </div>
-          <h2 className="text-2xl font-bold">Serviços</h2>
-            <Container>
+          <h2 className="text-2xl font-bold mb-5">Serviços</h2>
+            <Container customClass="noPadding">
               <p>Itens de Serviços</p>
             </Container>
         </Container>
