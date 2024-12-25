@@ -10,12 +10,14 @@ import Container from "../layout/Container";
 
 import ProjectForm from "../layout/Project/ProjectForm";
 import ServiceForm from "../layout/Service/ServiceForm";
+import ServiceCard from "../layout/Service/ServiceCard";
 
 import Mensagem from "../layout/Mensagem";
 
 const Project = () => {
   const { id } = useParams();
   const [project, setProject] = useState([]);
+  const [services, setServices] = useState([]);
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [showServiceForm, setShowServiceForm] = useState(false);
   const [message, setMessage] = useState(false);
@@ -28,14 +30,17 @@ const Project = () => {
         headers: { "Content-Type": "application/json" }
       })
         .then((response) => response.json())
-        .then((data) => setProject(data))
+        .then((data) => {
+          setProject(data);
+          setServices(data.services);
+        })
         .catch((err) => console.error(err));
     }, 300);
   }, [id]);
 
   const createService = () => {
 
-    setMessage('')
+    setMessage('');
 
     const lastService = project.services[project.services.length - 1];
 
@@ -51,6 +56,45 @@ const Project = () => {
       project.services.pop();
       return false;
     }
+
+    project.cors = newCost;
+
+    fetch(`http://localhost:5000/projects/${project.id}`, {
+      method: 'PATCH',
+      headers:{'Content-Type': 'application/json'},
+      body: JSON.stringify(project)
+    })
+    .then(response => response.json())
+    .then(data => {
+      setShowServiceForm(false);
+      setMessage("Serviço criado com sucesso!");
+      setType("success");
+    })
+    .catch(err => console.error(err))
+  }
+
+  const removeService = (id, cost) => {
+    const servicesUpdated = project.services.filter((service) => service.id !== id)
+
+    const projectUpdated = project;
+
+     projectUpdated.services = servicesUpdated
+
+    projectUpdated.cost = parseFloat(projectUpdated.cost) - parseFloat(cost);
+
+    fetch(`http://localhost:5000/projects/${projectUpdated.id}`, {
+      method: 'PATCH',
+      headers:{'Content-Type': 'application/json'},
+      body: JSON.stringify(projectUpdated)
+    })
+   .then(response => response.json())
+   .then(data => {
+    setProject(projectUpdated)
+    setServices(servicesUpdated)
+    setMessage("Serviço removido com sucesso!");
+    setType("success");
+   })
+   .catch(err => console.error(err));
   }
 
   const togleProjectForm = () => {
@@ -149,8 +193,19 @@ const Project = () => {
             <div>{showServiceForm && (<ServiceForm handleSubmit={createService} btnText="Adicionar serviço" projectData={project}/>)}</div>
           </div>
           <h2 className="text-2xl font-bold mb-5">Serviços</h2>
-            <Container customClass="noPadding">
-              <p>Itens de Serviços</p>
+            <Container customClass="noPadding_row">
+        {services.length > 0 ? services.map(service => (
+        
+           <ServiceCard
+            key={service.id}
+            name={service.name}
+            cost={service.cost}
+            description={service.description}
+            handleServiceRemove={removeService}
+            id={service.id}
+          />
+
+        )) : (<p>Sem serviços cadastrados</p>)}
             </Container>
         </Container>
       ) : (

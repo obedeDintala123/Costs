@@ -1,9 +1,27 @@
 {
   "projects": [
     {
-      "id": "dd22",
+      "id": "6348",
       "project_name": "Página Web",
-      "project_orcament": "98.000",
+      "project_orcament": "15.000",
+      "category": {
+        "id": "1",
+        "name": "Infra-estrutura"
+      },
+      "cors": 12,
+      "services": [
+        {
+          "name": "PHP",
+          "cost": "12.000",
+          "description": "Fazer o CRUD",
+          "id": "b8de685b-c084-4b09-b9ca-321e100390cf"
+        }
+      ]
+    },
+    {
+      "id": "4ba6",
+      "project_name": "Instalação de Servidores",
+      "project_orcament": "12.000",
       "category": {
         "id": "1",
         "name": "Infra-estrutura"
