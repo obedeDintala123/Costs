@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Costs
 
 Bem-vindo ao **Costs**, uma aplicação para gerenciamento de projetos que permite criar, gerenciar e acompanhar os custos dos seus projetos de maneira simples e eficiente.
